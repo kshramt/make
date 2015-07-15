@@ -219,6 +219,26 @@ all: foo.x foo-mt.x
 '',
 "one\ntwo");
 
+# TEST #10: make sure secondary flag is set properly for targets
+#           that are built via implicit rules.
+#
+run_make_test('
+.DELETE_ON_ERROR:
+
+.SECONDARY: %.1
+
+%.1:; @touch $@
+%.2: %.1; @touch $@
+
+$(dir)/foo.2:
+
+',
+"dir=$dir",
+"");
+
+unlink("$dir/foo.1");
+unlink("$dir/foo.2");
+
 1;
 
 # This tells the test driver that the perl test script executed properly.

@@ -885,6 +885,8 @@ pattern_search (struct file *file, int archive,
           imf = lookup_file (pat->pattern);
           if (imf != 0 && imf->precious)
             f->precious = 1;
+          if (imf != 0 && imf->secondary)
+            f->secondary = 1;
 
           for (dep = f->deps; dep != 0; dep = dep->next)
             {
@@ -955,6 +957,13 @@ pattern_search (struct file *file, int archive,
       file->precious = 1;
   }
 
+  /* Set secondary flag. */
+  {
+    struct file *f = lookup_file (rule->targets[tryrules[foundrule].matches]);
+    if (f && f->secondary)
+      file->secondary = 1;
+  }
+
   /* If this rule builds other targets, too, put the others into FILE's
      'also_make' member.  */
 
@@ -983,6 +992,11 @@ pattern_search (struct file *file, int archive,
           f = lookup_file (rule->targets[ri]);
           if (f && f->precious)
             new->file->precious = 1;
+
+          /* Set secondary flag. */
+          f = lookup_file (rule->targets[ri]);
+          if (f && f->secondary)
+            new->file->secondary = 1;
 
           /* Set the is_target flag so that this file is not treated as
              intermediate by the pattern rule search algorithm and

@@ -87,8 +87,8 @@ The Rest of the List
 
  6) Right now the .PRECIOUS, .INTERMEDIATE, and .SECONDARY
     pseudo-targets have different capabilities.  For example, .PRECIOUS
-    can take a "%", the others can't.  Etc.  These should all work the
-    same, insofar as that makes sense.
+    and .SECONDARY can take a "%", the others can't.  Etc.  These should
+    all work the same, insofar as that makes sense.
 
  7) Improved debugging/logging/etc. capabilities.  Part of this is done:
     I introduced a number of debugging enhancements.  Tim Magill is (I
